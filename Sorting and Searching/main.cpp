@@ -1,0 +1,32 @@
+// moved the split string class to it's own file 
+/*
+	Name: Joshua Santillan
+	FileName: main.cpp	
+	Date: 5/12/19
+	Description: main.cpp that takes a paramater filename
+
+*/
+#include <string>
+#include <vector>
+#include <iostream>
+#include<fstream>
+#include "splitstring.h"
+#include "phonebook.h"
+
+int main(int argc, char const *argv[])
+{
+	if (argc < 2) {
+            std::cerr<< "Usage: " << argv[0] << "pass the filename as your first paramater" << std::endl;
+             return 1;
+        }
+
+    std::string fname = argv[1]; // takes the filename as the second argument being called when main is ran
+
+    PhoneBook mybook(fname); // constructur takes argv[1] as paramater
+    std::string s1 = "Jenifer Gusney";
+    std::string s2 = "862-427-5939";
+   std::cout << mybook.find_name(s1) << std::endl;
+  //  std::cout << mybook.find_number(s2) << std::endl;
+    
+    return 0;
+}

@@ -1,0 +1,90 @@
+#include<algorithm>
+#include"phonebook.h"
+
+PhoneBook::PhoneBook(std::string file){
+	
+	std::ifstream f (file.c_str());
+	std::string line;
+	int line_counter = 0;
+	while ( std::getline(f, line)) {
+		line_counter++;
+		splitstring input(line);
+		std::vector<std::string> flds = input.split(',');
+		std::string name = flds [1] + " " + flds [2];
+		v.push_back(new Listing(name, flds[3]));
+	}
+}
+
+void PhoneBook::print(){
+	for (Listing* names : v) {
+		std::cout << names->get_name() << " " << names->get_number() << std::endl;
+	}
+}
+
+void PhoneBook::sort_name(){
+
+	std::sort(v.begin(), v.end(), [](const Listing* x, const Listing* y) {
+
+		return x->get_name() < y->get_name(); //
+	}); // neat syntax
+}
+
+void PhoneBook::sort_number(){
+
+	std::sort(v.begin(), v.end(), [](const Listing* x, const Listing* y) {
+
+		return x->get_number() < y->get_number(); //
+	}); // neat syntax
+}
+
+std::string PhoneBook::find_name(const std::string &name){
+
+	sort_name();
+	int result = binarysearch_name(v, 0, v.size() -1, name);
+	return (v[result] -> get_name() + "'s number: " + v[result] -> get_number());
+}
+
+std::string PhoneBook::find_number(const std::string &number){
+
+	sort_number();
+	int result = binarysearch_number(v, 0, v.size() -1, number);
+	return (v[result] -> get_number() + " This number belongs to: " + v[result] -> get_name());
+}
+
+int PhoneBook::binarysearch_number(const std::vector<Listing*> &v, int from, int to, const std::string &value){
+        
+    if(from>to){
+        return -1; // if the vector runs out of search results or for some reason is empty.
+    }
+    
+    int mid = (from + to) /2; // find the midpoint of the vector
+    
+    if(v[mid] -> get_number() == value){
+        return mid; // if for some magical reason you hit the jackpot and midpoint is search result or you eventually find midpoint after recursion
+    }
+    
+    else if(v[mid] ->get_number() < value){
+        return binarysearch_number(v, mid +1, to, value);
+    }
+    else
+        return binarysearch_number(v, from, mid -1, value);
+}
+
+int PhoneBook::PhoneBook::binarysearch_name(const std::vector<Listing*> &v, int from, int to, const std::string &value){
+        
+    if(from>to){
+        return -1; // if the vector runs out of search results or for some reason is empty.
+    }
+    
+    int mid = (from + to) /2; // find the midpoint of the vector
+    
+    if(v[mid] -> get_name() == value){
+        return mid; // if for some magical reason you hit the jackpot and midpoint is search result or you eventually find midpoint after recursion
+    }
+    
+    else if(v[mid] ->get_name() < value){
+        return binarysearch_name(v, mid +1, to, value);
+    }
+    else
+        return binarysearch_name(v, from, mid -1, value);
+}

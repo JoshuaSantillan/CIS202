@@ -1,0 +1,31 @@
+#ifndef PHONEBOOK_H
+#define PHONEBOOK_H
+
+#include<iostream>
+#include<fstream>
+#include<vector>
+#include<string>
+#include "splitstring.h"
+#include "listing.h"
+
+class PhoneBook{
+	
+	std::vector<Listing*> v;
+	
+	public:
+	
+	PhoneBook(std::string file);
+	void populate();
+	void print();
+	void sort_name();
+	void sort_number();
+	std::string find_name(const std::string &name);
+	std::string find_number(const std::string &number);
+	std::string search(const std::string &key);
+	int binarysearch_name(const std::vector<Listing*> &v, int from, int to, const std::string &value);
+	
+	int binarysearch_number(const std::vector<Listing*> &v, int from, int to, const std::string &value);
+};
+
+
+#endif
