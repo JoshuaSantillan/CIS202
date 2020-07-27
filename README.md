@@ -45,4 +45,4 @@
 >It's nice to finally be able to see code hooked up to a window instead of a command line.
 
 ### Final Project - June 3
->The Final was a lot like the midterm, in fact all I really did was add more data fields. 
+>The Final was a lot like the midterm, more data fields
